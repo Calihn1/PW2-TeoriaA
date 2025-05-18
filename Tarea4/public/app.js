@@ -117,3 +117,22 @@ function renderNormalTable(data) {
   });
 }
 
+function renderCastingTable(data) {
+  const container = document.getElementById('resultContainer');
+  container.innerHTML = '';
+  let currentTitle = '';
+
+  data.forEach(entry => {
+    if (entry.Title !== currentTitle) {
+      currentTitle = entry.Title;
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'fw-bold mt-4 fs-5 border-bottom pb-1';
+      titleDiv.textContent = currentTitle;
+      container.appendChild(titleDiv);
+    }
+    const actorDiv = document.createElement('div');
+    actorDiv.className = 'ms-3 mb-1';
+    actorDiv.textContent = entry.Name;
+    container.appendChild(actorDiv);
+  });
+}
