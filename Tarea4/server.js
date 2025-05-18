@@ -41,3 +41,18 @@ app.post('/search/year', (req, res) => {
   });
 });
 
+// Buscar por actor y año combinados
+app.post('/search/actor-year', (req, res) => {
+  const { actor, year } = req.body;
+  const query = `
+    SELECT Movie.Title, Movie.Year, Movie.Score, Movie.Votes
+    FROM Movie
+    JOIN Casting ON Movie.MovieID = Casting.MovieID
+    JOIN Actor ON Actor.ActorId = Casting.ActorId
+    WHERE Actor.Name = ? AND Movie.Year = ?;
+  `;
+  db.all(query, [actor, year], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
