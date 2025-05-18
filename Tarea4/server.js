@@ -93,3 +93,14 @@ app.post('/search/casting', (req, res) => {
   });
 });
 
+// Obtener lista de películas (para selección múltiple)
+app.get('/movies/list', (req, res) => {
+  const query = `SELECT Title FROM Movie ORDER BY Title;`;
+  db.all(query, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    const titles = rows.map(row => row.Title);
+    res.json(titles);
+  });
+});
+
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
