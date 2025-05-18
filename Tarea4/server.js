@@ -71,3 +71,25 @@ app.post('/search/movies', (req, res) => {
     res.json(rows);
   });
 });
+
+// Casting por múltiples películas (máx 5)
+app.post('/search/casting', (req, res) => {
+  const movies = req.body.movies; // array de títulos
+  if (movies.length > 5) {
+    return res.status(400).json({ error: 'Too many movies selected. Maximum is 5.' });
+  }
+  const placeholders = movies.map(() => '?').join(',');
+  const query = `
+    SELECT Movie.Title, Actor.Name
+    FROM Movie
+    JOIN Casting ON Movie.MovieID = Casting.MovieID
+    JOIN Actor ON Actor.ActorId = Casting.ActorId
+    WHERE Movie.Title IN (${placeholders})
+    ORDER BY Movie.Title, Casting.Ordinal;
+  `;
+  db.all(query, movies, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
