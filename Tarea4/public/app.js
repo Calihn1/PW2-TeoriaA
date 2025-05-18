@@ -38,4 +38,33 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNormalTable(data);
   });
 
+  document.getElementById('searchMoviesOnlyBtn').addEventListener('click', async () => {
+    const selected = getSelectedMovies('movieSelect');
+    if (!selected.length) return showError('Select at least one movie');
+    const res = await fetch('/movies-only', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ titles: selected })
+    });
+    const data = await res.json();
+    if (!data || data.length === 0) return showError('No movie data found');
+    renderNormalTable(data);
+  });
+
+  document.getElementById('searchCastingBtn').addEventListener('click', async () => {
+    const movies = getSelectedMovies('castingSelect');
+    if (movies.length > 5) {
+      alert('Selected amount exceeds the maximum (5)');
+      return;
+    }
+    const res = await fetch('/search/casting', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ movies })
+    });
+    const data = await res.json();
+    if (data.error || data.length === 0) return showError('Casting not found');
+    renderCastingTable(data);
+  });
+  
 });
