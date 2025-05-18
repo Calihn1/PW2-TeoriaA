@@ -27,3 +27,17 @@ app.post('/search/actor', (req, res) => {
   });
 });
 
+// Buscar por año
+app.post('/search/year', (req, res) => {
+  const year = req.body.year;
+  const query = `
+    SELECT Title, Year, Score, Votes
+    FROM Movie
+    WHERE Year = ?;
+  `;
+  db.all(query, [year], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
