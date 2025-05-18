@@ -56,3 +56,18 @@ app.post('/search/actor-year', (req, res) => {
     res.json(rows);
   });
 });
+
+// Buscar por múltiples películas (lista de títulos)
+app.post('/search/movies', (req, res) => {
+  const movies = req.body.movies; // array de títulos
+  const placeholders = movies.map(() => '?').join(',');
+  const query = `
+    SELECT Title, Year, Score, Votes
+    FROM Movie
+    WHERE Title IN (${placeholders});
+  `;
+  db.all(query, movies, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
