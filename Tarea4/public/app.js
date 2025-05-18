@@ -25,5 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNormalTable(data);
   });
 
-});
+  document.getElementById('searchActorYearBtn').addEventListener('click', async () => {
+    const actor = document.getElementById('actorInputAY').value;
+    const year = document.getElementById('yearInputAY').value;
+    const res = await fetch('/search/actor-year', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ actor, year })
+    });
+    const data = await res.json();
+    if (data.error || data.length === 0) return showError('No movies found for that actor and year');
+    renderNormalTable(data);
+  });
 
+});
