@@ -93,4 +93,27 @@ function showError(message) {
   container.innerHTML = `<div class="alert alert-danger">${message}</div>`;
 }
 
+function renderNormalTable(data) {
+  const container = document.getElementById('resultContainer');
+  container.innerHTML = '';
+
+  if (data.length > 0) {
+    const header = document.createElement('div');
+    header.className = 'd-flex justify-content-between fw-bold border-bottom pb-2 mb-2';
+    header.innerHTML = `<div style="width: 25%">Title</div><div style="width: 20%">Year</div><div style="width: 20%">Score</div><div style="width: 20%">Votes</div>`;
+    container.appendChild(header);
+  }
+
+  data.forEach(movie => {
+    const row = document.createElement('div');
+    row.className = 'd-flex justify-content-between border p-2 rounded mb-2 bg-light';
+    row.innerHTML = `
+      <div style="width: 25%">${movie.Title}</div>
+      <div style="width: 20%">${movie.Year || '-'}</div>
+      <div style="width: 20%">${movie.Score || '-'}</div>
+      <div style="width: 20%">${movie.Votes || '-'}</div>
+    `;
+    container.appendChild(row);
+  });
+}
 
