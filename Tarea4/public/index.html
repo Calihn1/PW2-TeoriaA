@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buscador de Películas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+    <h1 class="mb-4 text-center">Buscador de Películas</h1>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <input type="text" id="actorInput" class="form-control" placeholder="Actor">
+        <button id="searchActorBtn" class="btn btn-primary mt-2 w-100">Buscar por Actor</button>
+      </div>
+      <div class="col-md-4">
+        <input type="text" id="yearInput" class="form-control" placeholder="Año">
+        <button id="searchYearBtn" class="btn btn-primary mt-2 w-100">Buscar por Año</button>
+      </div>
+      <div class="col-md-4">
+        <input type="text" id="actorInputAY" class="form-control" placeholder="Actor">
+        <input type="text" id="yearInputAY" class="form-control mt-2" placeholder="Año">
+        <button id="searchActorYearBtn" class="btn btn-primary mt-2 w-100">Actor y Año</button>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <label class="form-label">Películas</label>
+        <select id="movieSelect" class="form-select" multiple size="5"></select>
+        <button id="searchMoviesOnlyBtn" class="btn btn-secondary mt-2 w-100">Mostrar Solo Películas</button>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Casting por Película</label>
+        <select id="castingSelect" class="form-select" multiple size="5"></select>
+        <button id="searchCastingBtn" class="btn btn-secondary mt-2 w-100">Buscar Casting</button>
+      </div>
+    </div>
+
+    <div id="resultContainer" class="bg-white p-4 rounded shadow-sm"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
