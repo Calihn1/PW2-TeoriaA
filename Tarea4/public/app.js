@@ -66,5 +66,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (data.error || data.length === 0) return showError('Casting not found');
     renderCastingTable(data);
   });
-  
+
 });
+
+function loadMovies() {
+  fetch('/movies/list')
+    .then(res => res.json())
+    .then(data => {
+      const select1 = document.getElementById('movieSelect');
+      const select2 = document.getElementById('castingSelect');
+      data.forEach(title => {
+        const opt1 = new Option(title, title);
+        const opt2 = new Option(title, title);
+        select1.add(opt1);
+        select2.add(opt2);
+      });
+    });
+}
+
+function getSelectedMovies(selectId) {
+  return Array.from(document.getElementById(selectId).selectedOptions).map(opt => opt.value);
+}
+
+function showError(message) {
+  const container = document.getElementById('resultContainer');
+  container.innerHTML = `<div class="alert alert-danger">${message}</div>`;
+}
+
+
